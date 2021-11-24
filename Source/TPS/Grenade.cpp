@@ -63,7 +63,7 @@ void AGrenade::StartThrow()
 			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 		//World->SpawnActor<AGrenadeProjectile>(AGrenadeProjectile::StaticClass(), Location, Direction, ActorSpawnParams);
 		FRotator rotation = UKismetMathLibrary::MakeRotFromX(Direction);
-		World->SpawnActor<AGrenadeProjectile>(ProjectileClass, Location, rotation, ActorSpawnParams);
+		auto x = World->SpawnActor<AGrenadeProjectile>(ProjectileClass, Location, rotation, ActorSpawnParams);
 	}
 
 	//SpawnProjectTile();
