@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Grenade.h"
 
@@ -48,6 +49,23 @@ bool AGrenade::CalculateFireInfo(FVector& Location, FVector& Direction)
 void AGrenade::StartThrow()
 {
 	ConsumeAmmo();
+
+	FVector Location, Direction;
+	CalculateFireInfo(Location, Direction);
+
+	if (ProjectileClass != NULL)
+	{
+		UWorld* const World = GetWorld();
+		bool bNoCollisionFail = true;
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = bNoCollisionFail ? \
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn : \
+			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+		//World->SpawnActor<AGrenadeProjectile>(AGrenadeProjectile::StaticClass(), Location, Direction, ActorSpawnParams);
+		FRotator rotation = UKismetMathLibrary::MakeRotFromX(Direction);
+		World->SpawnActor<AGrenadeProjectile>(ProjectileClass, Location, rotation, ActorSpawnParams);
+	}
+
 	//SpawnProjectTile();
 }
 

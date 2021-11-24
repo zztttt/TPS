@@ -59,7 +59,8 @@ void ATPSCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ATPSCharacter::ReadyToSprint);
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ATPSCharacter::ReadyToSprint);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ATPSCharacter::ReadyToSprint);
 	PlayerInputComponent->BindAction("EquipRifle", IE_Pressed, this, &ATPSCharacter::EquipRifle);
 	PlayerInputComponent->BindAction("EquipGrenade", IE_Pressed, this, &ATPSCharacter::EquipGrenade);
 

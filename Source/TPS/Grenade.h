@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GrenadeProjectile.h"
 #include "Grenade.generated.h"
 
 UCLASS()
-class TPS_API AGrenade : public AActor
+class AGrenade : public AActor
 {
 	GENERATED_BODY()
 	
@@ -25,6 +25,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	USkeletalMeshComponent* Mesh;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AGrenadeProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere)
 	FName GrenadeSocket;
