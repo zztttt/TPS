@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "WeaponProjectile.h"
 #include "GameFramework/Actor.h"
 #include "Weapon.generated.h"
 
@@ -39,6 +40,10 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	USkeletalMeshComponent* Mesh;
+
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AWeaponProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere)
 	int32 MaxAmmo;

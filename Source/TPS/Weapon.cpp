@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Kismet/GameplayStatics.h"
-#include "Camera/PlayerCameraManager.h"
 #include "Weapon.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h" 
+#include "Camera/PlayerCameraManager.h"
+
 
 // Sets default values
 AWeapon::AWeapon()
@@ -36,7 +38,20 @@ void AWeapon::Tick(float DeltaTime)
 void AWeapon::StartFire()
 {
 	ConsumeAmmo();
-	SpawnProjectTile();
+	FVector Location, Direction;
+	CalculateFireInfo(Location, Direction);
+
+	if (ProjectileClass != NULL)
+	{
+		UWorld* const World = GetWorld();
+		bool bNoCollisionFail = true;
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = bNoCollisionFail ? \
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn : \
+			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+		FRotator rotation = UKismetMathLibrary::MakeRotFromX(Direction);
+		auto x = World->SpawnActor<AWeaponProjectile>(ProjectileClass, Location, rotation, ActorSpawnParams);
+	}
 }
 
 void AWeapon::StopFire()
