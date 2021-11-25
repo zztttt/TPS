@@ -17,7 +17,7 @@ AWeapon::AWeapon()
 	MaxAmmo = 30;
 	CurrentAmmo = MaxAmmo;
 	AmmoPerShot = 1;
-	TraceDistance = 100000;
+	TraceDistance = 200000;
 	WeaponSocket = FName("weapon_hand");
 }
 
@@ -71,6 +71,9 @@ bool AWeapon::CalculateFireInfo(FVector& Location, FVector& Direction)
 		FVector CameraLocation = CameraManager->GetCameraLocation();
 		FVector CameraDirection = CameraManager->GetCameraRotation().Vector();
 		Direction = ((CameraLocation + CameraDirection * TraceDistance) - Location).GetSafeNormal();
+		//FVector ActorLocation = this->GetActorLocation();
+		//FVector ActorDirection = this->GetActorRotation().Vector();
+		//Direction = ((ActorLocation + ActorDirection * TraceDistance) - Location).GetSafeNormal();
 		return true;
 	}
 	return false;
