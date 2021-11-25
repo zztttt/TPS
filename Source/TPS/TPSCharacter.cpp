@@ -19,6 +19,7 @@ ATPSCharacter::ATPSCharacter()
 
 	IsSprint = false;
 	EquipmentIndex = 1;
+	IsSpotLightOpen = false;
 
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
@@ -63,6 +64,8 @@ void ATPSCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInput
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ATPSCharacter::ReadyToSprint);
 	PlayerInputComponent->BindAction("EquipRifle", IE_Pressed, this, &ATPSCharacter::EquipRifle);
 	PlayerInputComponent->BindAction("EquipGrenade", IE_Pressed, this, &ATPSCharacter::EquipGrenade);
+	PlayerInputComponent->BindAction("SpotLight", IE_Released, this, &ATPSCharacter::OpenOrCloseSpotlight);
+
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ATPSCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATPSCharacter::MoveRight);
@@ -165,4 +168,12 @@ void ATPSCharacter::EquipRifle()
 void ATPSCharacter::EquipGrenade()
 {
 	EquipmentIndex = 4;
+}
+
+void ATPSCharacter::OpenOrCloseSpotlight()
+{
+	if (IsSpotLightOpen)
+		IsSpotLightOpen = false;
+	else
+		IsSpotLightOpen = true;
 }

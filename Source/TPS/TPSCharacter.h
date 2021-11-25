@@ -35,6 +35,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int EquipmentIndex;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool IsSpotLightOpen;
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -51,6 +54,8 @@ protected:
 	void EquipRifle();
 
 	void EquipGrenade();
+
+	void OpenOrCloseSpotlight();
 
 	/** 
 	 * Called via input to turn at a given rate. 
