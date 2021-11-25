@@ -36,7 +36,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool CalculateFireInfo(FVector& Location, FVector& Direction);
 
+	UFUNCTION(BlueprintCallable)
+	float GetRemainingPercent();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsReloading();
+
+	UFUNCTION(BlueprintCallable)
+	void reloading();
+
 	void ConsumeAmmo();
+
 
 	UPROPERTY(EditAnywhere)
 	USkeletalMeshComponent* Mesh;
@@ -58,5 +68,5 @@ public:
 	int32 TraceDistance;
 
 	UPROPERTY(EditAnywhere)
-	FName MuzzleSocket;
+	FName WeaponSocket;
 };

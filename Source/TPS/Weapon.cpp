@@ -14,11 +14,11 @@ AWeapon::AWeapon()
 
 	Mesh = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(FName("WeaponMesh"));
 
-	MaxAmmo = 1024;
+	MaxAmmo = 30;
 	CurrentAmmo = MaxAmmo;
 	AmmoPerShot = 1;
 	TraceDistance = 100000;
-	MuzzleSocket = FName("Muzzle");
+	WeaponSocket = FName("weapon_hand");
 }
 
 // Called when the game starts or when spawned
@@ -37,6 +37,8 @@ void AWeapon::Tick(float DeltaTime)
 
 void AWeapon::StartFire()
 {
+	if (IsReloading())
+		return;
 	ConsumeAmmo();
 	FVector Location, Direction;
 	CalculateFireInfo(Location, Direction);
@@ -65,13 +67,28 @@ bool AWeapon::CalculateFireInfo(FVector& Location, FVector& Direction)
 	APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
 	if (CameraManager)
 	{
-		Location = Mesh->GetSocketLocation(MuzzleSocket);
+		Location = Mesh->GetSocketLocation(WeaponSocket);
 		FVector CameraLocation = CameraManager->GetCameraLocation();
 		FVector CameraDirection = CameraManager->GetCameraRotation().Vector();
 		Direction = ((CameraLocation + CameraDirection * TraceDistance) - Location).GetSafeNormal();
 		return true;
 	}
 	return false;
+}
+
+float AWeapon::GetRemainingPercent()
+{
+	return (float)CurrentAmmo / (float)MaxAmmo;
+}
+
+bool AWeapon::IsReloading()
+{
+	return CurrentAmmo == 0;
+}
+
+void AWeapon::reloading()
+{
+	CurrentAmmo = MaxAmmo;
 }
 
 void AWeapon::ConsumeAmmo()
